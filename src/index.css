@@ -59,6 +59,13 @@
     /* Typography */
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
+
+    /* Pastel palette for commissions */
+    --pastel-bg: 50 20% 95%;
+    --pastel-card: 275 30% 94%;
+    --pastel-primary: 175 30% 87%;
+    --pastel-accent-rose: 0 60% 87%;
+    --pastel-text: 0 0% 23%;
   }
 
   .dark {
