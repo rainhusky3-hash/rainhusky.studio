@@ -14,11 +14,11 @@ export default function CommissionTerms() {
             <h2 className="font-display text-xl text-foreground mt-8">Revisions</h2>
             <p>Revisions included per tier (see pricing). Major changes after approval may incur additional fees.</p>
             <h2 className="font-display text-xl text-foreground mt-8">Usage Rights</h2>
-            <p>Personal use included. Commercial licensing available at additional cost. Artist retains right to display work in portfolio.</p>
+            <p>Personal use included. Artist retains right to display work in portfolio.</p>
             <h2 className="font-display text-xl text-foreground mt-8">Cancellations</h2>
             <p>Full refund if cancelled before work begins. Partial refund based on progress if work has started.</p>
             <h2 className="font-display text-xl text-foreground mt-8">Contact</h2>
-            <p>Questions? <a href="mailto:hello@artistry.com" className="text-foreground font-medium hover:underline">hello@artistry.com</a></p>
+            <p>Questions? <a href="mailto:rainhusky3@gmail.com" className="text-foreground font-medium hover:underline">rainhusky3@gmail.com</a></p>
           </div>
         </div>
       </section>
