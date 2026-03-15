@@ -11,26 +11,13 @@ export function NewsletterSignup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!email) {
-      toast({
-        title: "Email required",
-        description: "Please enter your email address.",
-        variant: "destructive",
-      });
+      toast({ title: "Email required", description: "Please enter your email address.", variant: "destructive" });
       return;
     }
-
     setIsLoading(true);
-    
-    // Simulate subscription (will be connected to backend later)
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Subscribed!",
-      description: "You'll be the first to know about new releases.",
-    });
-    
+    toast({ title: "Subscribed!", description: "You'll be the first to know about new releases." });
     setEmail("");
     setIsLoading(false);
   };
@@ -39,8 +26,8 @@ export function NewsletterSignup() {
     <section className="bg-card border-y border-border py-16">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-6">
-            <Mail className="w-6 h-6 text-primary" />
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-secondary/50 mb-6">
+            <Mail className="w-6 h-6 text-foreground" />
           </div>
           <h2 className="font-display text-3xl font-semibold text-foreground mb-4">
             Stay Inspired
@@ -60,7 +47,7 @@ export function NewsletterSignup() {
             <Button 
               type="submit" 
               disabled={isLoading}
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              className="bg-primary text-primary-foreground hover:bg-primary/80"
             >
               {isLoading ? "Subscribing..." : "Subscribe"}
             </Button>

@@ -51,21 +51,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
-        },
-        surface: {
-          elevated: "hsl(var(--surface-elevated))",
-          overlay: "hsl(var(--surface-overlay))",
-        },
         pastel: {
           bg: "hsl(var(--pastel-bg))",
           card: "hsl(var(--pastel-card))",
           primary: "hsl(var(--pastel-primary))",
           "accent-rose": "hsl(var(--pastel-accent-rose))",
           text: "hsl(var(--pastel-text))",
+        },
+        surface: {
+          elevated: "hsl(var(--surface-elevated))",
+          overlay: "hsl(var(--surface-overlay))",
         },
       },
       borderRadius: {

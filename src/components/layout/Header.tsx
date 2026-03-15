@@ -14,26 +14,24 @@ export function Header() {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-lg border-b border-border">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <Link 
             to="/" 
-            className="font-display text-2xl font-semibold text-foreground hover:text-primary transition-colors"
+            className="font-display text-2xl font-semibold text-foreground hover:text-muted-foreground transition-colors"
           >
             Artistry
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className={`font-body text-sm font-medium transition-colors hover:text-primary ${
+                className={`font-body text-sm font-medium transition-colors hover:text-foreground ${
                   location.pathname === item.href
-                    ? "text-primary"
+                    ? "text-foreground"
                     : "text-muted-foreground"
                 }`}
               >
@@ -42,14 +40,12 @@ export function Header() {
             ))}
           </div>
 
-          {/* CTA Button */}
           <div className="hidden md:block">
-            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/80">
               <Link to="/gallery">Shop Art</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -59,18 +55,17 @@ export function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-border/50 pt-4 animate-fade-in">
+          <div className="md:hidden mt-4 pb-4 border-t border-border pt-4 animate-fade-in">
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`font-body text-base font-medium transition-colors hover:text-primary ${
+                  className={`font-body text-base font-medium transition-colors hover:text-foreground ${
                     location.pathname === item.href
-                      ? "text-primary"
+                      ? "text-foreground"
                       : "text-muted-foreground"
                   }`}
                 >

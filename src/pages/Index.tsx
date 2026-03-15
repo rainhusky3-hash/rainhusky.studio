@@ -38,18 +38,17 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-card" />
         
-        {/* Decorative elements */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        {/* Decorative blurs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-in">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Digital Art Collection</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/30 border border-primary/40 mb-8 animate-fade-in">
+              <Sparkles className="w-4 h-4 text-foreground" />
+              <span className="text-sm font-medium text-foreground">Digital Art Collection</span>
             </div>
             
             <h1 className="font-display text-5xl md:text-7xl font-bold text-foreground mb-6 animate-slide-up">
@@ -62,7 +61,7 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: "0.2s" }}>
-              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-gold">
+              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/80 shadow-gold">
                 <Link to="/gallery">
                   Explore Gallery
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -95,24 +94,27 @@ const Index = () => {
             {featuredArtwork.map((artwork, index) => (
               <article
                 key={artwork.id}
-                className="group relative bg-background rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 shadow-card hover:shadow-gold"
+                className="group relative rounded-lg overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 shadow-card hover:shadow-elevated"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={artwork.image}
-                    alt={artwork.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                {/* White frame for artwork */}
+                <div className="p-3 bg-white">
+                  <div className="aspect-square overflow-hidden rounded">
+                    <img
+                      src={artwork.image}
+                      alt={artwork.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
-                <div className="p-6">
+                <div className="p-6 bg-background">
                   <h3 className="font-display text-lg font-medium text-foreground mb-2">
                     {artwork.title}
                   </h3>
                   <div className="flex items-center justify-between">
-                    <span className="text-primary font-semibold">${artwork.price}</span>
-                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
+                    <span className="text-foreground font-semibold">${artwork.price}</span>
+                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
                       View Details
                       <ArrowRight className="ml-1 w-4 h-4" />
                     </Button>
@@ -148,30 +150,32 @@ const Index = () => {
               <ul className="space-y-4 mb-8">
                 {["Personal illustrations", "Character designs", "Commercial artwork", "Custom portraits"].map((item) => (
                   <li key={item} className="flex items-center gap-3 text-foreground">
-                    <span className="w-2 h-2 rounded-full bg-primary" />
+                    <span className="w-2 h-2 rounded-full bg-secondary" />
                     {item}
                   </li>
                 ))}
               </ul>
               <div className="flex gap-4">
-                <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/80">
                   <Link to="/commissions">Start Commission</Link>
                 </Button>
-                <Button asChild variant="ghost" className="text-muted-foreground hover:text-primary">
+                <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
                   <Link to="/prices">View Pricing</Link>
                 </Button>
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-square rounded-lg overflow-hidden border border-border shadow-elevated">
-                <img
-                  src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=600&fit=crop"
-                  alt="Artist at work creating digital art"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+              <div className="bg-white p-3 rounded-lg shadow-elevated">
+                <div className="aspect-square rounded overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=600&fit=crop"
+                    alt="Artist at work creating digital art"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
               </div>
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary/30 rounded-full blur-2xl" />
             </div>
           </div>
         </div>
