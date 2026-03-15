@@ -60,6 +60,13 @@ export default {
           elevated: "hsl(var(--surface-elevated))",
           overlay: "hsl(var(--surface-overlay))",
         },
+        pastel: {
+          bg: "hsl(var(--pastel-bg))",
+          card: "hsl(var(--pastel-card))",
+          primary: "hsl(var(--pastel-primary))",
+          "accent-rose": "hsl(var(--pastel-accent-rose))",
+          text: "hsl(var(--pastel-text))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
