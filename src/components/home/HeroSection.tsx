@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[85vh] flex items-end justify-center overflow-hidden">
-      {/* Hero artwork — replace /images/hero-art.jpg to change */}
+      {/* Hero artwork slot */}
       <div className="absolute inset-0">
-        <img
-          src="/images/hero-art.jpg"
-          alt="Featured artwork by RainHusky"
-          className="w-full h-full object-cover"
+        <ImageSlot
+          storageKey="hero-art"
+          label="Upload Featured Artwork"
+          aspectRatio="hero"
+          className="w-full h-full"
+          frameClassName="rounded-none h-full"
+          showControls={true}
         />
       </div>
 
-      {/* Pastel gradient overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+      {/* Pastel gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent pointer-events-none" />
 
       {/* Content */}
       <div className="container mx-auto px-6 relative z-10 pb-16 pt-32">

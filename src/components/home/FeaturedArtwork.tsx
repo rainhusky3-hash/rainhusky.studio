@@ -1,28 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 
-const featuredPieces = [
-  {
-    id: 1,
-    title: "Character Portrait",
-    image: "https://images.unsplash.com/photo-1634017839464-5c339bbe3c35?w=600&h=600&fit=crop",
-  },
-  {
-    id: 2,
-    title: "Expressive Pose",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=600&fit=crop",
-  },
-  {
-    id: 3,
-    title: "Full Illustration",
-    image: "https://images.unsplash.com/photo-1549490349-8643362247b5?w=600&h=600&fit=crop",
-  },
-  {
-    id: 4,
-    title: "Reference Sheet",
-    image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=600&fit=crop",
-  },
+const featuredSlots = [
+  { key: "featured-1", title: "Artwork 1" },
+  { key: "featured-2", title: "Artwork 2" },
+  { key: "featured-3", title: "Artwork 3" },
+  { key: "featured-4", title: "Artwork 4" },
 ];
 
 export function FeaturedArtwork() {
@@ -39,24 +24,17 @@ export function FeaturedArtwork() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {featuredPieces.map((piece) => (
-            <Link
-              key={piece.id}
-              to="/gallery"
-              className="group block"
-            >
+          {featuredSlots.map((slot) => (
+            <div key={slot.key} className="group">
               <div className="bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className="aspect-square overflow-hidden rounded">
-                  <img
-                    src={piece.image}
-                    alt={piece.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
+                <ImageSlot
+                  storageKey={slot.key}
+                  label="Upload Artwork"
+                  aspectRatio="square"
+                  frameClassName="rounded"
+                />
               </div>
-              <p className="mt-2 text-sm font-medium text-foreground text-center">{piece.title}</p>
-            </Link>
+            </div>
           ))}
         </div>
 
