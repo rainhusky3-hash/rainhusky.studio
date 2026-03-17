@@ -30,11 +30,11 @@ export function NewsletterSignup() {
             <Mail className="w-6 h-6 text-foreground" />
           </div>
           <h2 className="font-display text-3xl font-semibold text-foreground mb-4">
-            Stay Inspired
+            Stay Updated
           </h2>
           <p className="text-muted-foreground mb-8">
-            Be the first to see new artwork, limited releases, and exclusive offers. 
-            No spam, just art.
+            Get notified about new artwork, open commission slots, and updates from RainHusky.
+            No spam — just art.
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <Input

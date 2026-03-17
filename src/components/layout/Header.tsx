@@ -21,7 +21,7 @@ export function Header() {
             to="/" 
             className="font-display text-2xl font-semibold text-foreground hover:text-muted-foreground transition-colors"
           >
-            Artistry
+            RainHusky
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
@@ -42,7 +42,7 @@ export function Header() {
 
           <div className="hidden md:block">
             <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/80">
-              <Link to="/gallery">Shop Art</Link>
+              <Link to="/commissions">Commission Art</Link>
             </Button>
           </div>
 
@@ -73,8 +73,8 @@ export function Header() {
                 </Link>
               ))}
               <Button asChild className="mt-2 bg-primary text-primary-foreground">
-                <Link to="/gallery" onClick={() => setMobileMenuOpen(false)}>
-                  Shop Art
+                <Link to="/commissions" onClick={() => setMobileMenuOpen(false)}>
+                  Commission Art
                 </Link>
               </Button>
             </div>

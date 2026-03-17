@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { Mail, Instagram, Twitter } from "lucide-react";
+import { Mail, Instagram, Coffee } from "lucide-react";
 
 const footerLinks = {
   shop: [
-    { label: "Digital Gallery", href: "/gallery" },
+    { label: "Gallery", href: "/gallery" },
     { label: "Commissions", href: "/commissions" },
     { label: "Pricing", href: "/prices" },
   ],
@@ -22,20 +22,36 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <Link to="/" className="font-display text-2xl font-semibold text-foreground">
-              Artistry
+              RainHusky
             </Link>
             <p className="mt-4 text-muted-foreground text-sm max-w-sm">
-              Unique digital artwork crafted with passion. Each piece tells a story, 
-              ready to inspire your space.
+              Hand-drawn furry art, character commissions, and pet portraits. 
+              Every piece is crafted with care.
             </p>
             <div className="flex gap-4 mt-6">
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Instagram">
+              <a 
+                href="https://instagram.com/rainhusky" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors" 
+                aria-label="Instagram"
+              >
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Twitter">
-                <Twitter size={20} />
+              <a 
+                href="https://ko-fi.com/rainhusky" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors" 
+                aria-label="Ko-fi"
+              >
+                <Coffee size={20} />
               </a>
-              <a href="mailto:hello@artistry.com" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
+              <a 
+                href="mailto:hello@rainhusky.com" 
+                className="text-muted-foreground hover:text-foreground transition-colors" 
+                aria-label="Email"
+              >
                 <Mail size={20} />
               </a>
             </div>
@@ -70,7 +86,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Artistry. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} RainHusky. All rights reserved.</p>
             <p className="text-sm text-muted-foreground">Secure payments via Shopify & PayPal</p>
           </div>
         </div>
