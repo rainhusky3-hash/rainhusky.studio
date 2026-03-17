@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ImagePlus, X } from "lucide-react";
+import { ImageSlot } from "@/components/ui/ImageSlot";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const commissionTiers = [
@@ -39,8 +40,6 @@ export function CommissionPreview() {
     const color = colorOptions.find((c) => c.id === selectedColor)!;
     const bg = backgroundOptions.find((b) => b.id === selectedBg)!;
     const message = `Hi RainHusky! I'd like to request a commission:\n\nType: ${tier.name}\nColor: ${color.label}${color.extra > 0 ? ` (+$${color.extra})` : ""}\nBackground: ${bg.label}${bg.extra > 0 ? ` (+$${bg.extra})` : ""}\nTotal: $${totalPrice}\n\nPlease let me know the next steps!`;
-    
-    // Copy to clipboard as a simple action
     navigator.clipboard.writeText(message).then(() => {
       alert("Commission request copied to clipboard! Paste it in your message to RainHusky.");
     }).catch(() => {
@@ -60,7 +59,6 @@ export function CommissionPreview() {
           </p>
         </div>
 
-        {/* Tier cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-10">
           {commissionTiers.map((t) => (
             <button
@@ -74,13 +72,14 @@ export function CommissionPreview() {
                   : "border-transparent shadow-sm hover:shadow-md hover:scale-[1.01]"
               )}
             >
-              {/* Image placeholder */}
               <div className="p-2 pb-0">
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden aspect-square flex items-center justify-center">
-                  <div className="text-muted-foreground/40 flex flex-col items-center gap-1">
-                    <ImagePlus className="w-6 h-6" />
-                    <span className="text-[10px] font-medium">Example Art</span>
-                  </div>
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <ImageSlot
+                    storageKey={`commission-${t.id}`}
+                    label="Example Art"
+                    aspectRatio="square"
+                    frameClassName="rounded"
+                  />
                 </div>
               </div>
               <div className="p-3 text-center space-y-1">
@@ -92,7 +91,6 @@ export function CommissionPreview() {
           ))}
         </div>
 
-        {/* Configuration panel */}
         {selectedTier && tier && (
           <div className="max-w-lg mx-auto bg-card rounded-xl border border-border p-6 shadow-sm animate-fade-in">
             <div className="flex items-center justify-between mb-4">
@@ -104,7 +102,6 @@ export function CommissionPreview() {
               </button>
             </div>
 
-            {/* Color options */}
             <div className="mb-4">
               <p className="text-sm font-medium text-foreground mb-2">Color Style</p>
               <div className="flex flex-wrap gap-2">
@@ -125,7 +122,6 @@ export function CommissionPreview() {
               </div>
             </div>
 
-            {/* Background options */}
             <div className="mb-6">
               <p className="text-sm font-medium text-foreground mb-2">Background</p>
               <div className="flex flex-wrap gap-2">
@@ -146,7 +142,6 @@ export function CommissionPreview() {
               </div>
             </div>
 
-            {/* Price + request */}
             <div className="flex items-center justify-between pt-4 border-t border-border">
               <div>
                 <p className="text-xs text-muted-foreground">Estimated Total</p>
