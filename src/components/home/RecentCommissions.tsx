@@ -1,4 +1,5 @@
 import { ImageSlot } from "@/components/ui/ImageSlot";
+import { useArtworkSlots } from "@/hooks/useArtworkSlots";
 
 const recentSlots = [
   { key: "recent-1", title: "Commission 1" },
@@ -7,6 +8,8 @@ const recentSlots = [
 ];
 
 export function RecentCommissions() {
+  const { slots, uploadImage, deleteImage } = useArtworkSlots();
+
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-6">
@@ -25,9 +28,12 @@ export function RecentCommissions() {
               <div className="bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
                 <ImageSlot
                   storageKey={slot.key}
+                  imageUrl={slots[slot.key]}
                   label="Upload Commission"
                   aspectRatio="square"
                   frameClassName="rounded"
+                  onUpload={async (file) => { await uploadImage(slot.key, file); }}
+                  onDelete={async () => { await deleteImage(slot.key); }}
                 />
               </div>
             </div>

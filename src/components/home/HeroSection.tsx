@@ -2,19 +2,24 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageSlot } from "@/components/ui/ImageSlot";
+import { useArtworkSlots } from "@/hooks/useArtworkSlots";
 
 export function HeroSection() {
+  const { slots, uploadImage, deleteImage } = useArtworkSlots();
+
   return (
     <section className="relative min-h-[85vh] flex items-end justify-center overflow-hidden">
       {/* Hero artwork slot */}
       <div className="absolute inset-0">
         <ImageSlot
           storageKey="hero-art"
+          imageUrl={slots["hero-art"]}
           label="Upload Featured Artwork"
           aspectRatio="hero"
           className="w-full h-full"
           frameClassName="rounded-none h-full"
-          showControls={true}
+          onUpload={async (file) => { await uploadImage("hero-art", file); }}
+          onDelete={async () => { await deleteImage("hero-art"); }}
         />
       </div>
 

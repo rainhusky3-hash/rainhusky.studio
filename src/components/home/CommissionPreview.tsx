@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ImageSlot } from "@/components/ui/ImageSlot";
+import { useArtworkSlots } from "@/hooks/useArtworkSlots";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,7 @@ const backgroundOptions = [
 ];
 
 export function CommissionPreview() {
+  const { slots, uploadImage, deleteImage } = useArtworkSlots();
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState("lineart");
   const [selectedBg, setSelectedBg] = useState("no-bg");
@@ -60,35 +62,41 @@ export function CommissionPreview() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-10">
-          {commissionTiers.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setSelectedTier(selectedTier === t.id ? null : t.id)}
-              className={cn(
-                "rounded-xl overflow-hidden transition-all duration-200 text-left",
-                "bg-card border-2",
-                selectedTier === t.id
-                  ? "border-primary shadow-md scale-[1.02]"
-                  : "border-transparent shadow-sm hover:shadow-md hover:scale-[1.01]"
-              )}
-            >
-              <div className="p-2 pb-0">
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <ImageSlot
-                    storageKey={`commission-${t.id}`}
-                    label="Example Art"
-                    aspectRatio="square"
-                    frameClassName="rounded"
-                  />
+          {commissionTiers.map((t) => {
+            const slotKey = `commission-${t.id}`;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setSelectedTier(selectedTier === t.id ? null : t.id)}
+                className={cn(
+                  "rounded-xl overflow-hidden transition-all duration-200 text-left",
+                  "bg-card border-2",
+                  selectedTier === t.id
+                    ? "border-primary shadow-md scale-[1.02]"
+                    : "border-transparent shadow-sm hover:shadow-md hover:scale-[1.01]"
+                )}
+              >
+                <div className="p-2 pb-0">
+                  <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <ImageSlot
+                      storageKey={slotKey}
+                      imageUrl={slots[slotKey]}
+                      label="Example Art"
+                      aspectRatio="square"
+                      frameClassName="rounded"
+                      onUpload={async (file) => { await uploadImage(slotKey, file); }}
+                      onDelete={async () => { await deleteImage(slotKey); }}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="p-3 text-center space-y-1">
-                <h3 className="font-display text-sm font-semibold text-foreground">{t.name}</h3>
-                <p className="text-xs font-medium text-accent-foreground">Starting at ${t.price}</p>
-                <p className="text-[11px] text-muted-foreground leading-snug">{t.description}</p>
-              </div>
-            </button>
-          ))}
+                <div className="p-3 text-center space-y-1">
+                  <h3 className="font-display text-sm font-semibold text-foreground">{t.name}</h3>
+                  <p className="text-xs font-medium text-accent-foreground">Starting at ${t.price}</p>
+                  <p className="text-[11px] text-muted-foreground leading-snug">{t.description}</p>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
         {selectedTier && tier && (
