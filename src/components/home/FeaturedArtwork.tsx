@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageSlot } from "@/components/ui/ImageSlot";
+import { useArtworkSlots } from "@/hooks/useArtworkSlots";
 
 const featuredSlots = [
   { key: "featured-1", title: "Artwork 1" },
@@ -11,6 +12,8 @@ const featuredSlots = [
 ];
 
 export function FeaturedArtwork() {
+  const { slots, uploadImage, deleteImage } = useArtworkSlots();
+
   return (
     <section className="py-20 bg-card">
       <div className="container mx-auto px-6">
@@ -29,9 +32,12 @@ export function FeaturedArtwork() {
               <div className="bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
                 <ImageSlot
                   storageKey={slot.key}
+                  imageUrl={slots[slot.key]}
                   label="Upload Artwork"
                   aspectRatio="square"
                   frameClassName="rounded"
+                  onUpload={async (file) => { await uploadImage(slot.key, file); }}
+                  onDelete={async () => { await deleteImage(slot.key); }}
                 />
               </div>
             </div>
