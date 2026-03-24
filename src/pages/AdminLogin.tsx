@@ -32,7 +32,7 @@ export default function AdminLogin() {
   if (user) {
     return (
       <Layout>
-        <SEOHead title="Admin" />
+        <SEOHead title="Admin" description="Admin panel" />
         <section className="py-20">
           <div className="container mx-auto px-6 max-w-md text-center">
             <h1 className="font-display text-2xl font-bold text-foreground mb-4">
