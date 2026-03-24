@@ -55,7 +55,7 @@ export default function AdminLogin() {
 
   return (
     <Layout>
-      <SEOHead title="Admin Login" />
+      <SEOHead title="Admin Login" description="Admin login" />
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-md">
           <h1 className="font-display text-2xl font-bold text-foreground mb-6 text-center">

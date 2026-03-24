@@ -1,78 +1,59 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { ImagePlus, Trash2, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface ImageSlotProps {
   storageKey: string;
+  imageUrl?: string | null;
   label?: string;
   aspectRatio?: "square" | "video" | "hero";
   className?: string;
   frameClassName?: string;
-  showControls?: boolean;
-}
-
-function getStoredImage(key: string): string | null {
-  try {
-    return localStorage.getItem(`rainhusky-img-${key}`);
-  } catch {
-    return null;
-  }
-}
-
-function setStoredImage(key: string, data: string | null) {
-  try {
-    if (data) {
-      localStorage.setItem(`rainhusky-img-${key}`, data);
-    } else {
-      localStorage.removeItem(`rainhusky-img-${key}`);
-    }
-  } catch (e) {
-    console.warn("Could not save image to localStorage:", e);
-  }
+  onUpload?: (file: File) => Promise<void>;
+  onDelete?: () => Promise<void>;
 }
 
 export function ImageSlot({
   storageKey,
+  imageUrl,
   label = "Upload Artwork",
   aspectRatio = "square",
   className,
   frameClassName,
-  showControls = true,
+  onUpload,
+  onDelete,
 }: ImageSlotProps) {
-  const [image, setImage] = useState<string | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const { isAdmin } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    setImage(getStoredImage(storageKey));
-  }, [storageKey]);
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) return;
-
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const data = ev.target?.result as string;
-      setImage(data);
-      setStoredImage(storageKey, data);
-    };
-    reader.readAsDataURL(file);
-
-    // Reset input so the same file can be re-selected
+    if (!file || !file.type.startsWith("image/") || !onUpload) return;
+    await onUpload(file);
     e.target.value = "";
   };
 
-  const handleUploadClick = () => {
+  const handleClick = () => {
+    if (!isAdmin) return;
     fileInputRef.current?.click();
-  };
-
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setImage(null);
-    setStoredImage(storageKey, null);
   };
 
   const aspectClass =
@@ -82,12 +63,14 @@ export function ImageSlot({
       ? "aspect-video"
       : "aspect-square";
 
-  return (
+  const slotContent = (
     <div
-      className={cn("relative group cursor-pointer", className)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleUploadClick}
+      className={cn(
+        "relative group",
+        isAdmin && "cursor-pointer",
+        className
+      )}
+      onClick={handleClick}
     >
       <input
         ref={fileInputRef}
@@ -99,40 +82,73 @@ export function ImageSlot({
 
       <div className={cn("overflow-hidden rounded-lg", frameClassName)}>
         <div className={cn(aspectClass, "overflow-hidden rounded")}>
-          {image ? (
+          {imageUrl ? (
             <img
-              src={image}
+              src={imageUrl}
               alt={label}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           ) : (
             <div className="w-full h-full bg-card border-2 border-dashed border-border flex flex-col items-center justify-center gap-2 text-muted-foreground">
               <ImagePlus className="w-8 h-8" />
-              <span className="text-xs font-medium">{label}</span>
+              <span className="text-xs font-medium">
+                {isAdmin ? label : ""}
+              </span>
             </div>
           )}
         </div>
       </div>
-
-      {/* Overlay controls on hover when image exists */}
-      {image && showControls && isHovered && (
-        <div className="absolute inset-0 bg-foreground/30 rounded-lg flex items-center justify-center gap-3 transition-opacity">
-          <button
-            onClick={handleUploadClick}
-            className="p-2 bg-background rounded-full shadow-md hover:bg-card transition-colors"
-            title="Replace image"
-          >
-            <RefreshCw className="w-4 h-4 text-foreground" />
-          </button>
-          <button
-            onClick={handleDelete}
-            className="p-2 bg-background rounded-full shadow-md hover:bg-destructive hover:text-destructive-foreground transition-colors"
-            title="Remove image"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        </div>
-      )}
     </div>
+  );
+
+  // Non-admin: no context menu, no editing
+  if (!isAdmin) {
+    return slotContent;
+  }
+
+  // Admin: wrap with context menu
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger asChild>
+        {slotContent}
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem
+          onClick={() => fileInputRef.current?.click()}
+          className="gap-2"
+        >
+          <RefreshCw className="w-4 h-4" />
+          {imageUrl ? "Replace Image" : "Upload Image"}
+        </ContextMenuItem>
+        {imageUrl && onDelete && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <ContextMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="gap-2 text-destructive focus:text-destructive"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete Image
+              </ContextMenuItem>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete this image?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently remove this artwork from the site.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={onDelete}>
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
+      </ContextMenuContent>
+    </ContextMenu>
   );
 }
